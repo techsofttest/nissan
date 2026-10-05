@@ -72,24 +72,32 @@ export default function ApproachSection({ work }: WorkData) {
               <div className="text-base text-[#43515A] leading-relaxed" dangerouslySetInnerHTML={{  __html: work?.content ?? "",}}  />
 
               {/* Dynamic list */}
-              <ul className="pt-2 space-y-4">
-                {Array.isArray(work?.detail) &&
-                  work.detail.map((item, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center gap-4"
-                    >
-                      <div className="p-2.5 rounded-full bg-[#E6F3F4] text-[#5FAAAD] shrink-0">
-                        {renderIcon(item.icon)}
-                      </div>
+                         <ul className="pt-2 space-y-4">
+  {Array.isArray(work?.detail) &&
+    work.detail.map((item, index) => (
+      <li
+        key={index}
+        className="flex items-start gap-4"
+      >
+        <div className="p-2.5 rounded-full bg-[#E6F3F4] text-[#5FAAAD] shrink-0">
+          {renderIcon(item.icon)}
+        </div>
 
-                      <span className="text-lg font-semibold text-[#101820]">
-                        {item.title}
-                      </span>
-                      {/* <div className="text-[14px] text-[#101820]/90 leading-relaxed pt-1" dangerouslySetInnerHTML={{__html:item.description}} /> */}
-                    </li>
-                  ))}
-              </ul>
+        <div className="flex flex-col">
+          <span className="text-lg font-semibold text-[#101820]">
+            {item.title}
+          </span>
+
+          <div
+            className="text-[14px] text-[#101820]/90 leading-relaxed pt-1"
+            dangerouslySetInnerHTML={{
+              __html: item.description,
+            }}
+          />
+        </div>
+      </li>
+    ))}
+</ul>
 
             </div>
           </ScrollReveal>
