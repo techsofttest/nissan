@@ -34,7 +34,7 @@ export default function ServicesMegaMenu({
                   </h4>
                 </div>
 
-                {/* Sub-services */}
+{/* Sub-services */}{service.services &&(
                 <ul className="space-y-2.5">
                   {service.services.map((item, i) => (
                     <li
@@ -63,7 +63,7 @@ export default function ServicesMegaMenu({
                       </a>
                     </li>
                   ))}
-                </ul>
+                </ul>)}
 
               </div>
             ))}
