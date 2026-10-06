@@ -170,7 +170,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div
-          className={`lg:hidden border-b px-6 py-6 flex flex-col space-y-4 animate-in slide-in-from-top duration-200 max-h-[85vh] overflow-y-auto custom-scrollbar ${scrolled
+          className={`flex min-[1200px]:hidden border-b px-6 py-6 flex flex-col space-y-4 animate-in slide-in-from-top duration-200 max-h-[85vh] overflow-y-auto custom-scrollbar ${scrolled
             ? "bg-white text-[#101820] border-[#D9E0E3]"
             : "bg-[#0F2628] text-white border-[#18393D]"
             }`}
