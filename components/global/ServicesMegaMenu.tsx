@@ -25,7 +25,7 @@ export default function ServicesMegaMenu({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-              <div key={service.slug || index} className="space-y-4">
+            <a href={`/service/${service.slug}`} key={service.slug || index} className="space-y-4">
 
                 {/* Category Title */}
                 <div className="border-b border-[#E6F3F4] pb-3">
@@ -41,8 +41,7 @@ export default function ServicesMegaMenu({
                       key={item.slug || i}
                       className="group/item"
                     >
-                      <a
-                        href={`/service/${item.slug}`}
+                      <div
                         className="flex items-start gap-2 text-[13px] text-[#2C3E50] font-medium hover:text-[#5FAAAD] transition-colors leading-snug"
                       >
                         <svg
@@ -60,12 +59,12 @@ export default function ServicesMegaMenu({
                         </svg>
 
                         <span>{item.title}</span>
-                      </a>
+                      </div>
                     </li>
                   ))}
                 </ul>)}
 
-              </div>
+              </a>
             ))}
           </div>
 
