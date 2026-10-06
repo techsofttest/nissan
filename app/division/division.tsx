@@ -361,7 +361,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                             </h3>
 
                             {eligibilitySection.content && (
-                                <div className="mt-5 text-[15px] leading-7 text-[#2F4748]  mt-5
+                                <div className="mt-5 text-[15px] leading-7 text-[#1A2C2D]  mt-5
                             
 
                             [&_ul]:space-y-3
@@ -411,7 +411,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                                 </h3>
 
                                 {durationSection.content && (
-                                    <div className="mt-5 space-y-3 text-[15px] leading-7 text-[#2F4748]">
+                                    <div className="mt-5 space-y-3 text-[15px] leading-7 text-[#1A2C2D]">
                                         <div dangerouslySetInnerHTML={{ __html: durationSection.content }} />
 
                                     </div>
@@ -438,7 +438,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
 
                                                 {item.description && (
                                                     <div
-                                                        className=" mt-5 text-sm leading-6 text-[#2F4748] [&_p]:mb-4  [&_p]:leading-6 [&_ul]:space-y-3 [&_ul]:mt-3  [&_li]:relative
+                                                        className=" mt-5 text-sm leading-6 text-[#1A2C2D] [&_p]:mb-4  [&_p]:leading-6 [&_ul]:space-y-3 [&_ul]:mt-3  [&_li]:relative
                                                     [&_li]:pl-5 [&_li]:leading-6 [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[0.65em] [&_li]:before:h-1.5
                                                     [&_li]:before:w-1.5 [&_li]:before:rounded-full [&_li]:before:bg-[#5FAAAD]
                                                 "dangerouslySetInnerHTML={{ __html: item.description, }} />
@@ -520,17 +520,24 @@ export default function DivisionPage({ data }: DivisionPageProps) {
 
 
                                 {practicalSection.content && (
-                                    <div className="mt-5 max-w-3xl space-y-4 text-[15px] leading-7 text-[#2F4748]">
+                                    <div className="mt-5 max-w-3xl space-y-4 text-[15px] leading-7 text-[#1A2C2D]">
 
-                                        {splitContent(
-                                            practicalSection.content
-                                        ).map(
-                                            (paragraph, index) => (
-                                                <p key={index}>
-                                                    {paragraph}
-                                                </p>
-                                            )
-                                        )}
+                                        <div
+                                        className="
+                                        mt-7
+                                        max-w-4xl
+                                        text-[15px]
+                                        leading-7
+                                        text-[#1A2C2D]
+
+                                        [&_p]:mb-4
+                                        [&_p:last-child]:mb-0
+                                    "
+                                        dangerouslySetInnerHTML={{
+                                            __html:
+                                                practicalSection.content,
+                                        }}
+                                    />
 
                                     </div>
                                 )}
@@ -565,7 +572,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
 
                                                     {module.description && (
                                                         <div
-                                                            className="mt-5 text-[15px] leading-7 text-[#2F4748]  mt-5
+                                                            className="mt-5 text-[15px] leading-7 text-[#1A2C2D]  mt-5
                             text-sm
                             leading-6
                             text-[#2F4748]
@@ -647,7 +654,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                                         max-w-4xl
                                         text-[15px]
                                         leading-7
-                                        text-[#2F4748]
+                                        text-[#1A2C2D]
 
                                         [&_p]:mb-4
                                         [&_p:last-child]:mb-0
@@ -710,7 +717,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                                                                 mt-5
                                                                 text-[15px]
                                                                 leading-7
-                                                                text-[#2F4748]
+                                                                text-[#1A2C2D]
 
                                                                 [&_p]:mb-4
                                                                 [&_p:last-child]:mb-0
