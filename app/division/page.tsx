@@ -10,6 +10,7 @@ interface Seo {
 
 interface Hero {
   title: string;
+  sub: string;
   content: string;
   image: string;
 }

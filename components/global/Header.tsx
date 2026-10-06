@@ -46,7 +46,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
         }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        <a href="#" className="relative flex items-center group py-2.5 px-6 md:px-8">
+        <a href="/" className="relative flex items-center group py-2.5 px-6 md:px-8">
           {/* Sliced White Background Badge fully covering the logo */}
           <span className="absolute top-[-2rem] bottom-[-1rem] -left-[100vw] -right-8 md:-right-16 bg-white shadow-md transform [clip-path:polygon(0_0,100%_0,95%_100%,0_100%)] group-hover:bg-white/95 transition-all duration-300 pointer-events-none z-0" />
 
@@ -67,7 +67,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
             }`}
         >
           <a
-            href="#"
+            href="/"
             className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
               }`}
           >
