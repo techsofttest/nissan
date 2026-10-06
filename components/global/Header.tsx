@@ -274,6 +274,13 @@ const [divisionOpen, setDivisionOpen] = useState(false);
             Why Choose Us
           </a>
           <a
+            href="/division"
+            onClick={() => setMobileMenuOpen(false)}
+            className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
+          >
+           Division
+          </a>
+          <a
             href="#ecosystem"
             onClick={() => setMobileMenuOpen(false)}
             className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
