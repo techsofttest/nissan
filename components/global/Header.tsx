@@ -63,7 +63,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
 
         {/* Desktop Nav */}
         <nav
-          className={`hidden lg:flex items-center space-x-8 text-[15px] font-medium transition-colors ${scrolled ? "text-[#101820]" : "text-white"
+          className={`hidden min-[1200px]:flex items-center space-x-8 text-[15px] font-medium transition-colors ${scrolled ? "text-[#101820]" : "text-white"
             }`}
         >
           <a
@@ -135,13 +135,13 @@ const [divisionOpen, setDivisionOpen] = useState(false);
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden lg:flex items-center gap-4">
+        <div className="hidden min-[1200px]:flex items-center gap-4">
           <Button
             href="#contact"
             variant={scrolled ? "primary" : "primary-dark"}
             size="sm"
             icon={
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className=" w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             }
@@ -153,7 +153,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`lg:hidden p-2 focus:outline-none transition-colors ${scrolled ? "text-[#101820]" : "text-white"
+          className={`flex min-[1200px]:hidden  p-2 focus:outline-none transition-colors ${scrolled ? "text-[#101820]" : "text-white"
             }`}
           aria-label="Toggle navigation menu"
         >
