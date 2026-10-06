@@ -25,7 +25,7 @@ export default function ServicesMegaMenu({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((service, index) => (
-            <a href={`/service/${service.slug}`} key={service.slug || index} className="space-y-4">
+              <a href={`/service/${service.slug}`} key={service.slug || index} className="space-y-4">
 
                 {/* Category Title */}
                 <div className="border-b border-[#E6F3F4] pb-3">
@@ -34,35 +34,35 @@ export default function ServicesMegaMenu({
                   </h4>
                 </div>
 
-                {/* Sub-services */}{service.services &&(
-                <ul className="space-y-2.5">
-                  {service.services.map((item, i) => (
-                    <li
-                      key={item.slug || i}
-                      className="group/item"
-                    >
-                      <div
-                        className="flex items-start gap-2 text-[13px] text-[#2C3E50] font-medium hover:text-[#5FAAAD] transition-colors leading-snug"
+                {/* Sub-services */}{service.services && (
+                  <ul className="space-y-2.5">
+                    {service.services.map((item, i) => (
+                      <li
+                        key={item.slug || i}
+                        className="group/item"
                       >
-                        <svg
-                          className="w-3.5 h-3.5 text-[#5FAAAD] shrink-0 mt-0.5 group-hover/item:text-[#0F2628] transition-colors"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          stroke="currentColor"
+                        <div
+                          className="flex items-start gap-2 text-[13px] text-[#2C3E50] font-medium hover:text-[#5FAAAD] transition-colors leading-snug"
                         >
-                          <path
-                            d="M4 3v7h8"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
+                          <svg
+                            className="w-3.5 h-3.5 text-[#5FAAAD] shrink-0 mt-0.5 group-hover/item:text-[#0F2628] transition-colors"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            stroke="currentColor"
+                          >
+                            <path
+                              d="M4 3v7h8"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
 
-                        <span>{item.title}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>)}
+                          <span>{item.title}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>)}
 
               </a>
             ))}
