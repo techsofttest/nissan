@@ -66,77 +66,34 @@ interface DivisionPageProps {
         comp: PageSection | null;
     };
 }
-export default function DivisionPage({ data }: DivisionPageProps) {
-    const heroTitle =
-        data?.hero?.title?.trim() || "Our Divisions";
+export default function DivisionPage({ data }: DivisionPageProps) { 
+    const extractFirstLink = (html: string | undefined | null) => {
+    if (!html) return null;
 
-    const heroContent =
-        data?.hero?.content?.trim() ||
-        "To deliver services efficiently and maintain specialised attention across different areas, Nissan Business Solutions operates through dedicated divisions and associated organisations, each aligned to a distinct strategic purpose.";
+    const match = html.match(
+        /<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i
+    );
 
-    const trainingSection = data?.training ?? {
-        title: "Practical Accounting Training",
-        sub: "School of Accounts & Management (SAM)",
-        content: "",
-        image: null,
+    if (!match) return null;
+
+    const href = match[1];
+    const text = match[2].replace(/<[^>]+>/g, "").trim();
+
+    return {
+        href,
+        text,
     };
+};  const removeLinks = (html: string | undefined | null) => {
+    if (!html) return "";
 
-    const practicalSection = data?.course ?? {
-        title: "Practical Accounting Programme",
-        sub: "About the programme",
-        content: "",
-        image: null,
-        detail: [],
-    };
-
-    const courseSection = data?.practical ?? {
-        title: "Course Curriculum",
-        sub: "What you will learn",
-        content: "",
-        image: null,
-        detail: [],
-    };
-
-    const eligibilitySection = data?.eligibility ?? {
-        title: "Course Eligibility",
-        sub: "Admissions",
-        content: "",
-        image: null,
-        detail: [],
-    };
-
-    const durationSection = data?.duration ?? {
-        title: "Course Duration",
-        sub: "Learning formats",
-        content: "",
-        image: null,
-        detail: [],
-    };
-
-    const methodologySection = data?.metho ?? {
-        title: "Practical Training Methodology",
-        sub: "Learning approach",
-        content: "",
-        image: null,
-        detail: [],
-    };
-
-    const additionalSection = data?.comp ?? {
-        title: "More about the programme",
-        sub: "Additional information",
-        content: "",
-        image: null,
-        detail: [],
-    };
-
-
-
+    return html.replace(
+        /<a\b[^>]*href=["'][^"']+["'][^>]*>[\s\S]*?<\/a>/gi,
+        ""
+    );
+};
     return (
         <main className="min-h-screen bg-[#F5F8F5] text-[#142F32]">
 
-            {/* =====================================================
-                HERO
-            ===================================================== */}
 
             <header className="relative isolate overflow-hidden bg-[#102D33] text-white">
 
@@ -160,7 +117,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                     <div>
 
                         <h1 className="mt-8 text-5xl font-semibold leading-[1.05] tracking-[-0.05em] sm:text-7xl">
-                            {heroTitle}
+                            {data.hero.title}
                             <span className="text-white">.</span>
                         </h1>
 
@@ -168,15 +125,12 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                     </div>
 
 
-                    <div className="mt-7 max-w-xl text-base leading-8 text-[#EAF5F4] sm:text-lg" dangerouslySetInnerHTML={{ __html: heroContent }} />
+                    <div className="mt-7 max-w-xl text-base leading-8 text-[#EAF5F4] sm:text-lg" dangerouslySetInnerHTML={{ __html: data.hero.content }} />
 
                 </div>
             </header>
 
 
-            {/* =====================================================
-                DIVISIONS
-            ===================================================== */}
 
             <section
                 id="our-divisions"
@@ -199,42 +153,85 @@ export default function DivisionPage({ data }: DivisionPageProps) {
 
                     <div className="mt-10 space-y-5">
 
-                        {data?.detail?.map((division, idx) => (
+                       {data?.detail?.map((division, idx) => {
+                                        const divisionLink = extractFirstLink(division.description);
 
-                            <article
-                                id={`division-${idx}`}
-                                key={idx}
-                                className="relative scroll-mt-6 overflow-hidden rounded-[1.75rem] border border-[#DEE8E1] bg-white shadow-[0_8px_32px_rgba(15,42,42,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#A8CCC0] hover:shadow-[0_20px_50px_rgba(15,42,42,0.09)]"
-                            >
+                                        return (
+                                                                <article
+                                                                    id={`division-${idx}`}
+                                                                    key={idx}
+                                                                    className="relative scroll-mt-6 overflow-hidden rounded-[1.75rem] border border-[#DEE8E1] bg-white shadow-[0_8px_32px_rgba(15,42,42,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#A8CCC0] hover:shadow-[0_20px_50px_rgba(15,42,42,0.09)]"
+                                                                >
 
-                                <div
-                                    aria-hidden="true"
-                                    className="absolute inset-y-0 left-0 w-1 bg-[#5FAAAD]"
-                                />
+                                                                    <div
+                                                                        aria-hidden="true"
+                                                                        className="absolute inset-y-0 left-0 w-1 bg-[#5FAAAD]"
+                                                                    />
 
-                                <div className="grid gap-6 p-6 sm:grid-cols-[64px_minmax(0,1fr)] sm:gap-8 sm:p-9">
+                                                                    <div className="grid gap-6 p-6 sm:grid-cols-[64px_minmax(0,1fr)] sm:gap-8 sm:p-9">
 
-                                    <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EDF5F1] text-lg font-bold text-[#276F70] ring-1 ring-[#D5E6DC]">
-                                        {String(idx + 1).padStart(2, "0")}
-                                    </span>
+                                                                        <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EDF5F1] text-lg font-bold text-[#276F70] ring-1 ring-[#D5E6DC]">
+                                                                            {String(idx + 1).padStart(2, "0")}
+                                                                        </span>
 
-                                    <div>
+                                                                        <div>
+                                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
                                         <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.03em] sm:text-[1.75rem]">
-                                            {division.title}
+                                        {division.title}
                                         </h3>
-                                        <div className=" mt-6 space-y-3 border-t border-[#E9EFEB] pt-6 text-[15px] leading-7 text-[#1B2E30]
-                                        [&_ul]:mt-5 [&_ul]:grid [&_ul]:gap-x-8 [&_ul]:gap-y-3 [&_ul]:sm:grid-cols-2 [&_li]:relative [&_li]:flex [&_li]:items-start [&_li]:gap-3 [&_li]:pl-5 [&_li]:text-sm
-                                         [&_li]:leading-6 [&_li]:text-[#1A2C2D]  [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[0.65em] [&_li]:before:h-1.5 [&_li]:before:w-1.5 [&_li]:before:rounded-full [&_li]:before:bg-[#5FAAAD]
-                                         "dangerouslySetInnerHTML={{ __html: division.description, }} />
 
+                                        {divisionLink && (
+                                            <a
+                                                    href={divisionLink.href}
+                                                    className="
+                                                        inline-flex w-fit shrink-0 items-center gap-2
+                                                        rounded-full
+                                                        border border-[#A8C7C2]
+                                                        bg-[#F8FBFA]
+                                                        px-5 py-2.5
+                                                        text-sm font-semibold
+                                                        text-[#1F5C5D]
+                                                        transition-all duration-300
+                                                        hover:border-[#1F5C5D]
+                                                        hover:bg-[#1F5C5D]
+                                                        hover:text-white
+                                                        hover:gap-3
+                                                        hover:shadow-md
+                                                    "
+                                                    >
+                                                <div dangerouslySetInnerHTML={{__html:divisionLink.text}}/>
+
+                                                <svg
+                                                    className="h-4 w-4"
+                                                    viewBox="0 0 16 16"
+                                                    fill="none"
+                                                >
+                                                    <path
+                                                        d="M3 8h9M9 4l4 4-4 4"
+                                                        stroke="currentColor"
+                                                        strokeWidth="1.7"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </svg>
+                                            </a>
+                                        )}
+
+
+                                    </div>
+                                    <div className=" mt-6 space-y-3 border-t border-[#E9EFEB] pt-6 text-[15px] leading-7 text-[#1B2E30] [&_ul]:mt-5 [&_ul]:grid 
+                                    [&_ul]:gap-x-8 [&_ul]:gap-y-3 [&_ul]:sm:grid-cols-2 [&_li]:relative [&_li]:flex [&_li]:items-start [&_li]:gap-3 [&_li]:pl-5 [&_li]:text-sm
+                                    [&_li]:leading-6 [&_li]:text-[#1A2C2D]  [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[0.65em] [&_li]:before:h-1.5 [&_li]:before:w-1.5
+                                    [&_li]:before:rounded-full [&_li]:before:bg-[#5FAAAD]  "dangerouslySetInnerHTML={{__html: removeLinks(division.description),}}/>
+                                         
                                     </div>
 
                                 </div>
 
                             </article>
-
-                        ))}
+                           );
+                            })}
 
                     </div>
 
@@ -257,41 +254,32 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                         <div>
 
                             <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#276F70]">
-                                02 / {trainingSection.sub}
+                                02 / {data.training?.sub ?? ""}
                             </p>
 
                             <h2
                                 id="training-heading"
                                 className="mt-4 text-4xl font-semibold leading-tight tracking-[-0.04em] sm:text-5xl"
                             >
-                                {trainingSection.title}
+                                {data.training?.title ?? ""}
                                 <span className="text-[#5FAAAD]">
                                     .
                                 </span>
                             </h2>
 
-                            {/* {trainingSection.sub && (
-                                <p className="mt-5 text-sm font-medium text-[#2B4C4D]">
-                                    {trainingSection.sub}
-                                </p>
-                            )} */}
 
                         </div>
 
                         <div className="space-y-5 text-[15px] leading-8 text-[#1B2E30] lg:pt-7">
 
-                            {trainingSection.content && (
-                                <div dangerouslySetInnerHTML={{ __html: trainingSection.content }} />
+                            {data.training?.content && (
+                                <div dangerouslySetInnerHTML={{ __html: data.training?.content ?? ""}} />
                             )}
 
                         </div>
 
                     </div>
 
-
-                    {/* =================================================
-                        PROGRAMME + ELIGIBILITY
-                    ================================================= */}
 
                     <div className="mt-16 grid gap-6 lg:grid-cols-2">
 
@@ -300,22 +288,22 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                         <article className="rounded-[1.75rem] border border-[#E0EAE4] bg-[#F8FAF8] p-7 sm:p-9">
 
                             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#276F70]">
-                                {courseSection.sub || "About the programme"}
+                                {data.practical?.sub || "About the programme"}
                             </p>
 
                             <h3 className="mt-4 text-2xl font-semibold tracking-tight">
-                                {courseSection.title}
+                                {data.practical?.title ?? ""}
                             </h3>
 
                             <div className="mt-5 space-y-4 text-[15px] leading-7 text-[#1B2E30]">
 
-                                <div dangerouslySetInnerHTML={{ __html: courseSection.content }} />
+                                <div dangerouslySetInnerHTML={{ __html: data.practical?.content  ?? ""}} />
 
                             </div>
-                            {courseSection.detail && (
+                            {data.practical?.detail && (
                                 <ul className="mt-5 space-y-3">
 
-                                    {courseSection.detail.map(
+                                    {data.practical?.detail.map(
                                         (item, idx) => (
 
                                             <li
@@ -353,14 +341,14 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                         <article className="rounded-[1.75rem] border border-[#E0EAE4] bg-[#F8FAF8] p-7 sm:p-9">
 
                             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#276F70]">
-                                {eligibilitySection.sub || "Admissions"}
+                                {data.eligibility?.sub || ""}
                             </p>
 
                             <h3 className="mt-4 text-2xl font-semibold tracking-tight">
-                                {eligibilitySection.title}
+                                {data.eligibility?.title ?? ""}
                             </h3>
 
-                            {eligibilitySection.content && (
+                            {data.eligibility?.content && (
                                 <div className="mt-5 text-[15px] leading-7 text-[#1A2C2D]  mt-5
                             
 
@@ -377,7 +365,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                             [&_li]:before:h-1.5
                             [&_li]:before:w-1.5
                             [&_li]:before:rounded-full
-                            [&_li]:before:bg-[#5FAAAD]" dangerouslySetInnerHTML={{ __html: eligibilitySection.content }} />
+                            [&_li]:before:bg-[#5FAAAD]" dangerouslySetInnerHTML={{ __html: data.eligibility?.content }} />
                             )}
 
 
@@ -385,14 +373,9 @@ export default function DivisionPage({ data }: DivisionPageProps) {
 
                     </div>
 
-
-                    {/* =================================================
-                        COURSE DURATION
-                    ================================================= */}
-
-                    {(durationSection.title ||
-                        durationSection.content ||
-                        durationSection?.detail) && (
+                    {(data.duration?.title ||
+                        data.duration?.content ||
+                        data.duration?.detail) && (
 
                             <section
                                 aria-labelledby="duration-heading"
@@ -400,26 +383,26 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                             >
 
                                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#276F70]">
-                                    {durationSection.sub || "Learning formats"}
+                                    {data.duration?.sub || ""}
                                 </p>
 
                                 <h3
                                     id="duration-heading"
                                     className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl"
                                 >
-                                    {durationSection.title}
+                                    {data.duration?.title ?? ""}
                                 </h3>
 
-                                {durationSection.content && (
+                                {data.duration?.content && (
                                     <div className="mt-5 space-y-3 text-[15px] leading-7 text-[#1A2C2D]">
-                                        <div dangerouslySetInnerHTML={{ __html: durationSection.content }} />
+                                        <div dangerouslySetInnerHTML={{ __html: data.duration?.content }} />
 
                                     </div>
                                 )}
 
-                                {durationSection.detail && (
+                                {data.duration?.detail && (
                                     <div className="mt-7 grid gap-5 lg:grid-cols-2">
-                                        {durationSection.detail.map((item, index) => (
+                                        {data.duration?.detail.map((item, index) => (
                                             <article
                                                 key={index}
                                                 className="rounded-2xl border border-[#DCE9E0] bg-white p-6 sm:p-7"
@@ -453,26 +436,26 @@ export default function DivisionPage({ data }: DivisionPageProps) {
 
 
 
-                    {(methodologySection.title ||
-                        methodologySection) && (
+                    {(data.metho?.title ||
+                        data.metho?.content) && (
 
                             <article className="mt-8 grid gap-8 rounded-[1.75rem] bg-[#12343A] p-7 text-white sm:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
 
                                 <div>
 
                                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#A8D9D3]">
-                                        {methodologySection.sub || "Learning approach"}
+                                        {data.metho?.sub || ""}
                                     </p>
 
                                     <h3 className="mt-4 text-2xl font-semibold leading-tight tracking-tight sm:text-3xl">
-                                        {methodologySection.title}
+                                        {data.metho?.title || ""}
                                     </h3>
 
                                 </div>
 
                                 <div className="space-y-4 text-[15px] leading-8 text-[#D1E3E0]">
 
-                                    <div dangerouslySetInnerHTML={{ __html: methodologySection.content }} />
+                                    <div dangerouslySetInnerHTML={{ __html: data.metho?.content ?? "" }} />
 
                                 </div>
 
@@ -481,12 +464,8 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                         )}
 
 
-                    {/* =================================================
-                        COURSE CURRICULUM
-                    ================================================= */}
-
-                    {(practicalSection.title ||
-                        practicalSection.content) && (
+                    {(data.course?.title ||
+                        data.course?.content) && (
 
                             <section
                                 aria-labelledby="curriculum-heading"
@@ -498,28 +477,28 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                                     <div>
 
                                         <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#276F70]">
-                                            {practicalSection.sub || "What you will learn"}
+                                            {data.course?.sub || ""}
                                         </p>
 
                                         <h3
                                             id="curriculum-heading"
                                             className="mt-3 text-3xl font-semibold tracking-tight"
                                         >
-                                            {practicalSection.title}
+                                            {data.course?.title}
                                         </h3>
 
                                     </div>
 
-                                    {practicalSection.detail && (
+                                    {data.course?.detail && (
                                         <span className="rounded-full border border-[#DCE9E0] px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#52716C]">
-                                            {practicalSection.detail.length} modules
+                                            {data.course?.detail.length} modules
                                         </span>
                                     )}
 
                                 </div>
 
 
-                                {practicalSection.content && (
+                                {data.course?.content && (
                                     <div className="mt-5 max-w-3xl space-y-4 text-[15px] leading-7 text-[#1A2C2D]">
 
                                         <div
@@ -535,7 +514,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                                     "
                                         dangerouslySetInnerHTML={{
                                             __html:
-                                                practicalSection.content,
+                                                data.course?.content,
                                         }}
                                     />
 
@@ -543,11 +522,11 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                                 )}
 
 
-                                {practicalSection.detail && (
+                                {data.course?.detail && (
 
                                     <div className="mt-7 grid gap-5 lg:grid-cols-2">
 
-                                        {practicalSection.detail.map(
+                                        {data.course?.detail.map(
                                             (module, index) => (
 
                                                 <article
@@ -614,10 +593,10 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                         )}
 
 
-                    {(additionalSection.title ||
-                        additionalSection.content ||
-                        (additionalSection.detail &&
-                            additionalSection.detail.length > 0)) && (
+                    {(data.comp?.title ||
+                        data.comp?.content ||
+                        (data.comp?.detail &&
+                            data.comp?.detail.length > 0)) && (
 
                             <div className="mt-20 border-t border-[#E0EAE4] pt-10">
 
@@ -629,13 +608,13 @@ export default function DivisionPage({ data }: DivisionPageProps) {
 
                                             <span className="h-px w-8 bg-[#5FAAAD]" />
 
-                                            {additionalSection.sub ||
-                                                "Additional information"}
+                                            {data.comp?.sub ||
+                                                ""}
 
                                         </p>
 
                                         <h3 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
-                                            {additionalSection.title}
+                                            {data.comp?.title}
                                             <span className="text-[#5FAAAD]">
                                                 .
                                             </span>
@@ -646,7 +625,7 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                                 </div>
 
 
-                                {additionalSection.content && (
+                                {data.comp?.content && (
 
                                     <div
                                         className="
@@ -661,19 +640,19 @@ export default function DivisionPage({ data }: DivisionPageProps) {
                                     "
                                         dangerouslySetInnerHTML={{
                                             __html:
-                                                additionalSection.content,
+                                                data.comp?.content,
                                         }}
                                     />
 
                                 )}
 
 
-                                {additionalSection.detail &&
-                                    additionalSection.detail.length > 0 && (
+                                {data.comp?.detail &&
+                                    data.comp?.detail.length > 0 && (
 
                                         <div className="mt-8 grid gap-5 lg:grid-cols-2">
 
-                                            {additionalSection.detail.map(
+                                            {data.comp?.detail.map(
                                                 (item, index) => (
 
                                                     <article
