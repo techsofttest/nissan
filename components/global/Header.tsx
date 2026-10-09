@@ -230,13 +230,14 @@ const isSolidHeader = isServicePage || scrolled;
                 {service.map((service, index) => (
                   <div key={index} className="pl-2 border-l-2 border-[#5FAAAD]">
                     <Link href={`/service/${service.slug}`}
-                      onClick={() =>
-                        setActiveMobileCategory(activeMobileCategory === index ? null : index)
-                      }
+                    onClick={() => setMobileMenuOpen(false)}
+                      // onClick={() =>
+                      //   setActiveMobileCategory(activeMobileCategory === index ? null : index)
+                      // }
                       className="w-full text-left font-semibold text-[13.5px] text-[#5FAAAD] flex items-center justify-between py-1"
                     >
                       <span>{service.title}</span>
-                      <span className="text-xs">{activeMobileCategory === index ? "−" : "+"}</span>
+                      {/* <span className="text-xs">{activeMobileCategory === index ? "−" : "+"}</span> */}
                     </Link>
 
                     {activeMobileCategory === index && service.services && (
