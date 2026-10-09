@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import ServicesMegaMenu from "@/components/global/ServicesMegaMenu";
 import { ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 export interface ServiceItem {
   title: string;
   slug: string;
@@ -161,7 +162,7 @@ const isSolidHeader = isServicePage || scrolled;
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`flex min-[1200px]:hidden  p-2 focus:outline-none transition-colors ${scrolled ? "text-[#101820]" : "text-white"
+          className={`flex min-[1200px]:hidden  p-2 focus:outline-none transition-colors ${isSolidHeader ? "text-[#101820]" : "text-white"
             }`}
           aria-label="Toggle navigation menu"
         >
@@ -228,7 +229,7 @@ const isSolidHeader = isServicePage || scrolled;
               <div className="pt-2 space-y-4">
                 {service.map((service, index) => (
                   <div key={index} className="pl-2 border-l-2 border-[#5FAAAD]">
-                    <button
+                    <Link href={`/service/${service.slug}`}
                       onClick={() =>
                         setActiveMobileCategory(activeMobileCategory === index ? null : index)
                       }
@@ -236,7 +237,7 @@ const isSolidHeader = isServicePage || scrolled;
                     >
                       <span>{service.title}</span>
                       <span className="text-xs">{activeMobileCategory === index ? "−" : "+"}</span>
-                    </button>
+                    </Link>
 
                     {activeMobileCategory === index && service.services && (
 
@@ -244,7 +245,7 @@ const isSolidHeader = isServicePage || scrolled;
                         {service.services.map((item, i) => (
                           <a
                             key={i}
-                            href={`/service/${item.slug}`}
+                            href={`/service/${service.slug}/${item.slug}`}
                             onClick={() => setMobileMenuOpen(false)}
                             className="flex items-start gap-2 text-[12.5px] text-white/90 hover:text-[#5FAAAD] py-1"
                           >
