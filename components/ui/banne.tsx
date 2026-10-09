@@ -33,7 +33,7 @@ export default function Banner({title,content,image}:Banner) {
                         {title}
                         <span className="text-[#5FAAAD]">.</span>
                     </h1>
-                    <p className="mt-5 max-w-xl text-base leading-7 text-white/80 sm:text-lg">{content}</p>
+                    <div className="mt-5 max-w-xl text-base leading-7 text-white/80 sm:text-lg" dangerouslySetInnerHTML={{__html:content}} />
                 </div>
             </section>
     );

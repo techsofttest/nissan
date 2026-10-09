@@ -20,6 +20,11 @@ interface ProductResponse {
   };
   service: Service;
   otherservice: Service[];
+  cta: {
+    title: string;
+    content: string;
+    image: string;
+  };
 }
 
 async function getService(slug: string): Promise<ProductResponse> {
@@ -88,7 +93,7 @@ export default async function ServiceDetailPage({
       </div>
 
       {/* CTA */}
-      <CtaPage />
+      <CtaPage cta={data.cta}/>
 
     </main>
   );

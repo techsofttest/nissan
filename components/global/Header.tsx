@@ -145,7 +145,7 @@ const isSolidHeader = isServicePage || scrolled;
         {/* Desktop CTA */}
         <div className="hidden min-[1200px]:flex items-center gap-4">
           <Button
-            href="/contact"
+            href="/contact#contact-form"
             variant={scrolled ? "primary" : "primary-dark"}
             size="sm"
             icon={

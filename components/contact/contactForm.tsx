@@ -132,7 +132,7 @@ const [serviceOpen, setServiceOpen] = useState(false);
   };
 
   return (
-    <section className="border-t border-[#D7E8E6] bg-white">
+    <section className="border-t border-[#D7E8E6] bg-white" id="contact-form">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
 
         {/* Administration */}

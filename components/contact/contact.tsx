@@ -35,15 +35,15 @@ function BuildingIcon() {
     );
 }
 
-export default function ContactPage({contact}:{contact:any[]}) {
+export default function ContactPage({contact,hero}:{contact:any[],hero:any}) {
     return (
         <main className="min-h-screen bg-[#F3FBFB] text-[#101820]">
             {/* Banner */}
             <section className="relative min-h-[420px] overflow-hidden text-white sm:min-h-[500px]">
                 <div aria-hidden="true" className="absolute inset-0">
                     <img
-                        src="home-hero/b1.png"
-                        alt=""
+                        src={hero.image || ""}
+                        alt="contactus"
                         className="h-full w-full object-cover"
                     />
                 </div>
@@ -62,17 +62,14 @@ export default function ContactPage({contact}:{contact:any[]}) {
                 />
 
                 <div className="relative z-10 mx-auto flex min-h-[420px] max-w-7xl flex-col justify-end px-6 pb-14 sm:min-h-[500px] sm:px-8 sm:pb-20">
-                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#A8D9D3]">
+                    {/* <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#A8D9D3]">
                         Get in touch
-                    </p>
+                    </p> */}
                     <h1 className="mt-4 max-w-2xl text-5xl font-semibold leading-[1.05] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
-                        Contact Us
+                       {hero.title}
                         <span className="text-[#5FAAAD]">.</span>
                     </h1>
-                    <p className="mt-5 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
-                        Reach our offices in Kottayam, Kochi and Bengaluru, or
-                        speak directly with the administration team.
-                    </p>
+                    <div className="mt-5 max-w-xl text-base leading-7 text-white/80 sm:text-lg" dangerouslySetInnerHTML={{__html:hero.content}} />
                 </div>
             </section>
 
