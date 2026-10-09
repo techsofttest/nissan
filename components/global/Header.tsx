@@ -5,6 +5,7 @@ import Image from "next/image";
 import Button from "@/components/ui/Button";
 import ServicesMegaMenu from "@/components/global/ServicesMegaMenu";
 import { ChevronDown } from "lucide-react";
+import { usePathname } from "next/navigation";
 export interface ServiceItem {
   title: string;
   slug: string;
@@ -20,12 +21,18 @@ interface ServicesMegaMenuProps {
   service: ServiceCategory[];
 }
 
-export default function Header({service}:ServicesMegaMenuProps) {
+export default function Header({ service }: ServicesMegaMenuProps) {
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [activeMobileCategory, setActiveMobileCategory] = useState<number | null>(null);
-const [divisionOpen, setDivisionOpen] = useState(false);
+  const [divisionOpen, setDivisionOpen] = useState(false);
+
+const pathname = usePathname();
+const isServicePage = /^\/service\/[^/]+\/?$/.test(pathname ?? "");
+const isSolidHeader = isServicePage || scrolled;
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 40) {
@@ -39,12 +46,13 @@ const [divisionOpen, setDivisionOpen] = useState(false);
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? "bg-white backdrop-blur-md py-4 text-[#101820] border-b border-[#D9E0E3] shadow-md"
-        : "bg-gradient-to-b from-[#0F2628]/95 via-[#0F2628]/80 to-transparent py-5 text-white"
-        }`}
-    >
+ <header
+  className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    isSolidHeader
+      ? "bg-white backdrop-blur-md py-4 text-[#101820] border-b border-[#D9E0E3] shadow-md"
+      : "bg-gradient-to-b from-[#0F2628]/95 via-[#0F2628]/80 to-transparent py-5 text-white"
+  }`}
+>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         <a href="/" className="relative flex items-center group py-2.5 px-6 md:px-8">
           {/* Sliced White Background Badge fully covering the logo */}
@@ -63,7 +71,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
 
         {/* Desktop Nav */}
         <nav
-          className={`hidden min-[1200px]:flex items-center space-x-8 text-[15px] font-medium transition-colors ${scrolled ? "text-[#101820]" : "text-white"
+          className={`hidden min-[1200px]:flex items-center space-x-8 text-[15px] font-medium transition-colors ${isSolidHeader ? "text-[#101820]" : "text-white"
             }`}
         >
           <a
@@ -74,7 +82,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
             Home
           </a>
           <a
-            href="#about"
+            href="/about"
             className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
               }`}
           >
@@ -84,7 +92,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
           {/* Full Width Services Mega Menu */}
           <div className="group static py-1">
             <a
-              href="#services"
+              href="/service"
               className={`flex items-center gap-1.5 transition-colors font-semibold ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
                 }`}
             >
@@ -100,33 +108,33 @@ const [divisionOpen, setDivisionOpen] = useState(false);
             </a>
 
             {/* Full-Width Mega Banner Component */}
-           {service && <ServicesMegaMenu services={service} />}
+            {service && <ServicesMegaMenu services={service} />}
           </div>
 
           <a
-            href="#why-us"
+            href="/why-us"
             className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
               }`}
           >
             Why Choose Us
           </a>
-            <a
+          <a
             href="/division"
             className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
               }`}
           >
-           Division
+            Division
           </a>
-   
+
           <a
-            href="#ecosystem"
+            href="/resourse"
             className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
               }`}
           >
             Resources
           </a>
           <a
-            href="#contact"
+            href="/contact"
             className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
               }`}
           >
@@ -231,9 +239,9 @@ const [divisionOpen, setDivisionOpen] = useState(false);
                     </button>
 
                     {activeMobileCategory === index && service.services && (
-                      
+
                       <div className="pl-2 pt-2 space-y-2">
-                      {service.services.map((item, i) => (
+                        {service.services.map((item, i) => (
                           <a
                             key={i}
                             href="#services"
@@ -254,7 +262,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
                               />
                             </svg>
 
-                          <span>{item.title}</span>
+                            <span>{item.title}</span>
                           </a>
                         ))}
                       </div>
@@ -278,7 +286,7 @@ const [divisionOpen, setDivisionOpen] = useState(false);
             onClick={() => setMobileMenuOpen(false)}
             className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
           >
-           Division
+            Division
           </a>
           <a
             href="#ecosystem"

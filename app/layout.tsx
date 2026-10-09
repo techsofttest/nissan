@@ -25,7 +25,7 @@ interface Contact {
   tel: string;
   fax: string;
   open: string;
-  facebook: string;
+  name: string;
   web: string;
 }
 

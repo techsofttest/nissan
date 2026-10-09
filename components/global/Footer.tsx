@@ -10,7 +10,7 @@ interface Contact {
   tel: string;
   fax: string;
   open: string;
-  facebook: string;
+  name: string;
   web: string;
 }
 
@@ -71,11 +71,11 @@ export default function Footer({contact1,service,admin}:FooterProps) {
             <h4 className="text-[15px] font-bold text-white tracking-wider uppercase">Navigation</h4>
             <ul className="space-y-2 text-[14px] text-[#E6F3F4] font-medium">
               <li><a href="/" className="hover:text-[#5FAAAD] transition-colors">Home</a></li>
-              <li><a href="#about" className="hover:text-[#5FAAAD] transition-colors">About Us</a></li>
-              <li><a href="#services" className="hover:text-[#5FAAAD] transition-colors">Services</a></li>
-              <li><a href="#why-us" className="hover:text-[#5FAAAD] transition-colors">Why Choose Us</a></li>
-              <li><a href="#ecosystem" className="hover:text-[#5FAAAD] transition-colors">Resources</a></li>
-              <li><a href="#contact" className="hover:text-[#5FAAAD] transition-colors">Contact Us</a></li>
+              <li><a href="/about" className="hover:text-[#5FAAAD] transition-colors">About Us</a></li>
+              <li><a href="/service" className="hover:text-[#5FAAAD] transition-colors">Services</a></li>
+              <li><a href="/why-us" className="hover:text-[#5FAAAD] transition-colors">Why Choose Us</a></li>
+              <li><a href="/ecosystem" className="hover:text-[#5FAAAD] transition-colors">Resources</a></li>
+              <li><a href="/contact" className="hover:text-[#5FAAAD] transition-colors">Contact Us</a></li>
             </ul>
           </div>
 
@@ -84,7 +84,7 @@ export default function Footer({contact1,service,admin}:FooterProps) {
             <h4 className="text-[15px] font-bold text-white tracking-wider uppercase">Business Services</h4>
             <ul className="space-y-2 text-[14px] text-[#E6F3F4] font-medium">
               {service.map((item,index) => (
-              <li  key={index} ><a href="#" className="hover:text-[#5FAAAD] transition-colors">{item.title}</a></li>))}
+              <li  key={index} ><a href={`/service/${item.slug}`} className="hover:text-[#5FAAAD] transition-colors">{item.title}</a></li>))}
             </ul>
           </div>
 
@@ -92,10 +92,10 @@ export default function Footer({contact1,service,admin}:FooterProps) {
           <div className="space-y-3">
             <h4 className="text-[15px] font-bold text-white tracking-wider uppercase">Ecosystem</h4>
             <ul className="space-y-2 text-[14px] text-[#E6F3F4] font-medium">
-              <li><a href="#ecosystem" className="hover:text-[#5FAAAD] transition-colors">School of Accounts</a></li>
-              <li><a href="#ecosystem" className="hover:text-[#5FAAAD] transition-colors">Practical Training</a></li>
-              <li><a href="#ecosystem" className="hover:text-[#5FAAAD] transition-colors">Placement Assistance</a></li>
-              <li><a href="#ecosystem" className="hover:text-[#5FAAAD] transition-colors">Online EDP Training</a></li>
+              {/* <li><a href="#ecosystem" className="hover:text-[#5FAAAD] transition-colors">School of Accounts</a></li> */}
+              <li><a href="/training" className="hover:text-[#5FAAAD] transition-colors">Training</a></li>
+              <li><a href="/placement" className="hover:text-[#5FAAAD] transition-colors">Placement Assistance</a></li>
+              <li><a href="/online" className="hover:text-[#5FAAAD] transition-colors">Online EDP Training</a></li>
             </ul>
           </div>
         </div>
@@ -116,7 +116,9 @@ export default function Footer({contact1,service,admin}:FooterProps) {
 
             {item.tel &&  <p><span className="text-[#5FAAAD]">Tel:</span>{item.tel}</p>}
             {item.fax && <p><span className="text-[#5FAAAD]">Fax:</span>{item.fax}</p>}
-              {item.phone && <p><span className="text-[#5FAAAD]">Mobile:</span> <a href={`tel:${item.phone}`} className="hover:text-[#5FAAAD] transition-colors text-white font-semibold">{item.phone}</a></p>}
+             {item.name && <p><span className="text-[#5FAAAD]">Contact Person:</span>{item.name}</p>}
+           
+              {item.phone && <p><span className="text-[#5FAAAD]">Contact No:</span> <a href={`tel:${item.phone}`} className="hover:text-[#5FAAAD] transition-colors text-white font-semibold">{item.phone}</a></p>}
             {item.web &&   <p className="pt-1"><span className="text-[#5FAAAD]">Web:</span> <a href={item.web} target="_blank" rel="noopener noreferrer" className="hover:text-[#5FAAAD] transition-colors text-white font-medium">{item.web}</a></p>}
              {item.email &&  <p><span className="text-[#5FAAAD]">Email:</span> <a href={`mailto:${item.email}`} className="hover:text-[#5FAAAD] transition-colors text-white font-medium">{item.email}</a></p>}
             </div>
