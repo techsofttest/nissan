@@ -28,6 +28,7 @@ interface ProductResponse {
     option: string;
   }[];
     service: {
+      slug:string;
     title: string;
     image:string;
     content: string;
@@ -157,7 +158,7 @@ export default async function Home() {
         <ApproachSection work={data?.work}  />
         <TrustMarquee client={data?.client || []} clientpage={data?.clientpage} />
         <VisionSection our={data?.our} />
-        <ContactSection contact={data?.contact} />
+        <ContactSection contact={data?.contact} service={data?.service?.map((item) => item.title) ?? []} />
       </main>
     </div>
   );

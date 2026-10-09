@@ -3,8 +3,11 @@
 import React, { useState } from "react";
 import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/ui/ScrollReveal";
-
-export default function ContactSection({ contact }: { contact: any }) {
+interface ContactSectionProps {
+  contact: any;
+  service: string[];
+}
+export default function ContactSection({ contact ,service}: { contact: any,service:any[] }) {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -229,14 +232,10 @@ export default function ContactSection({ contact }: { contact: any }) {
                     value={formData.category}
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-sm border border-[#D9E0E3] bg-white text-[#101820] focus:border-[#5FAAAD] focus:outline-none text-[14px] transition-colors"
-                  >
-                    <option>Business Registration</option>
-                    <option>Tax & Government Registrations</option>
-                    <option>Intellectual Property / Trademark</option>
-                    <option>Certifications (ISO/ISI)</option>
-                    <option>Accounting & Financial Services</option>
-                    <option>Licensing & Compliance</option>
-                    <option>Training & EDP Programs</option>
+                  >  
+                  <option  value=""> --selesct--- </option>
+                  {service.map((item,idx) => (
+                <option key={idx} value={item}> {item}</option>)) ?? []}
                   </select>
                 </div>
 

@@ -3,6 +3,7 @@ import Button from "@/components/ui/Button";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 interface data{
       service: {
+        slug:string;
     title: string;
     image:string;
     content: string;
@@ -66,7 +67,7 @@ export default function ServicesSection({service}:data) {
                   {/* CTA Button */}
                   <div className="pt-4 group-hover:border-[#18393D] transition-colors duration-300 shrink-0">
                     <Button
-                      href="#contact"
+                      href={`/service/${service.slug}`}
                       variant="tertiary"
                       size="sm"
                       className="group-hover:text-white"
@@ -76,7 +77,7 @@ export default function ServicesSection({service}:data) {
                         </svg>
                       }
                     >
-                      Enquire Now
+                      View More
                     </Button>
                   </div>
                 </div>

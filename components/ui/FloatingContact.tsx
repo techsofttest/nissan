@@ -25,7 +25,7 @@ export default function FloatingContact() {
 
   return (
     <a
-      href="/contact"
+      href="/contact#contact-form"
       className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 group inline-flex items-center justify-center p-[1.5px] rounded-full overflow-hidden transition-transform duration-300 hover:scale-105 shadow-2xl"
       aria-label="Contact Us"
     >
