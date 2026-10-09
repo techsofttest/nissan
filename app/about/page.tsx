@@ -110,7 +110,7 @@ export default async function Home() {
          title={data?.hero.title ?? ""}
          content={data?.hero.content ||""}
          image={data?.hero.image ||""} />
-        <AboutSection about={data?.about} />
+        <AboutSection about={data?.about}showButton={false} />
          <ApproachSection work={data?.work} />
         <VisionSection our={data?.our} />
       </main>

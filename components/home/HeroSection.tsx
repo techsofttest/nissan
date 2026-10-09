@@ -30,7 +30,7 @@ export default function HeroSection({hero}:{hero:any}) {
 
           <div className="flex flex-col sm:flex-row items-end sm:items-center justify-end gap-3 pt-4">
             <Button
-              href="#contact"
+              href="/contact"
               variant="primary-dark"
               size="md"
               className="!bg-white hover:!bg-[#E6F3F4] !text-[#101820] !border-white shadow-md font-bold"
@@ -45,7 +45,7 @@ export default function HeroSection({hero}:{hero:any}) {
             </Button>
 
             <Button
-              href="#services"
+              href="/service"
               variant="secondary"
               size="md"
             >

@@ -145,7 +145,7 @@ const isSolidHeader = isServicePage || scrolled;
         {/* Desktop CTA */}
         <div className="hidden min-[1200px]:flex items-center gap-4">
           <Button
-            href="#contact"
+            href="/contact"
             variant={scrolled ? "primary" : "primary-dark"}
             size="sm"
             icon={
@@ -184,14 +184,14 @@ const isSolidHeader = isServicePage || scrolled;
             }`}
         >
           <a
-            href="#"
+            href="/"
             onClick={() => setMobileMenuOpen(false)}
             className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
           >
             Home
           </a>
           <a
-            href="#about"
+            href="/about"
             onClick={() => setMobileMenuOpen(false)}
             className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
           >
@@ -202,7 +202,7 @@ const isSolidHeader = isServicePage || scrolled;
           <div className="border-y border-[#18393D]/40 py-2 my-1">
             <div className="flex items-center justify-between py-1">
               <a
-                href="#services"
+                href="/service"
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-[16px] font-bold hover:text-[#5FAAAD]"
               >
@@ -244,7 +244,7 @@ const isSolidHeader = isServicePage || scrolled;
                         {service.services.map((item, i) => (
                           <a
                             key={i}
-                            href="#services"
+                            href={`/service/${item.slug}`}
                             onClick={() => setMobileMenuOpen(false)}
                             className="flex items-start gap-2 text-[12.5px] text-white/90 hover:text-[#5FAAAD] py-1"
                           >
@@ -275,7 +275,7 @@ const isSolidHeader = isServicePage || scrolled;
           </div>
 
           <a
-            href="#why-us"
+            href="/why-us"
             onClick={() => setMobileMenuOpen(false)}
             className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
           >
@@ -289,14 +289,14 @@ const isSolidHeader = isServicePage || scrolled;
             Division
           </a>
           <a
-            href="#ecosystem"
+            href="/resourse"
             onClick={() => setMobileMenuOpen(false)}
             className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
           >
             Resources / Blog
           </a>
           <a
-            href="#contact"
+            href="/contact"
             onClick={() => setMobileMenuOpen(false)}
             className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
           >
@@ -304,7 +304,7 @@ const isSolidHeader = isServicePage || scrolled;
           </a>
           <div className="pt-2">
             <Button
-              href="#contact"
+              href="/contact"
               variant="primary"
               size="md"
               className="w-full"
