@@ -67,9 +67,9 @@ export default async function Home() {
     <div className="relative min-h-screen bg-[#F3FBFB] text-[#101820] font-sans antialiased selection:bg-[#0A6F8F] selection:text-white overflow-x-hidden">
       <main>
                  <Banner  
-                 title="Online EDP Training"
-                 content=""
-                 image="home-hero/b1.png" />
+                    title={data?.hero.title ?? ""}
+         content={data?.hero.content ||""}
+         image={data?.hero.image ||""} />
         <AboutSection about={data?.about} />
       </main>
     </div>
