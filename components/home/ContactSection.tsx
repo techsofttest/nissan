@@ -162,7 +162,7 @@ export default function ContactSection({ contact ,service}: { contact: any,servi
             <div className="max-w-xl w-full">
 
               <h3 className="text-2xl sm:text-3xl font-semibold text-[#101820] mb-2">
-                Schedule a Consultation
+                Schedule an Appointment
               </h3>
 
               <p className="text-[14px] text-[#43515A] mb-8">

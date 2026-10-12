@@ -155,7 +155,7 @@ const isSolidHeader = isServicePage || scrolled;
               </svg>
             }
           >
-            Get a Consultation
+           For Appointments
           </Button>
         </div>
 
@@ -317,7 +317,7 @@ const isSolidHeader = isServicePage || scrolled;
                 </svg>
               }
             >
-              Get a Consultation
+             For Appointments
             </Button>
           </div>
         </div>

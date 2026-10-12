@@ -32,13 +32,11 @@ export default function TrustMarquee({ client = [],clientpage }: TrustMarqueePro
         <div className="relative w-full overflow-hidden mt-24">
           <div className="flex animate-marquee whitespace-nowrap gap-12 items-center py-4">
 
-            {[...client, ...client].map((logo, index) => (
-              <div key={`${logo.image}-${index}`}
-                className="inline-flex items-center justify-center shrink-0 opacity-75 hover:opacity-100 transition-all duration-300 px-4 group" >
-                <img  alt={logo.title || "Client Partner Logo"} src={logo.image}
-                  className="h-18 w-auto object-contain grayscale group-hover:grayscale-0 transition-all duration-300"/>
-              </div>
-            ))}
+          {[...client, ...client].map((logo, index) => (
+            <div key={`${logo.image}-${index}`} className="inline-flex items-center justify-center shrink-0 opacity-75 hover:opacity-100 transition-all duration-300 px-4 group">
+              <img  alt={logo.title || "Client Partner Logo"}  src={logo.image} className="h-18 w-auto object-contain transition-all duration-300"/>
+          </div>
+          ))}
 
           </div>
         </div>

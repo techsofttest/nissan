@@ -4,6 +4,8 @@ import AboutSection from "@/components/home/AboutSection";
 import ApproachSection from "./ApproachSection";
 import Banner from "@/components/ui/banne";
 import VisionSection from "@/components/home/VisionSection";
+
+import ProfileData from "@/components/resource/pofileData";
 interface ProductResponse {
   seo: {
     meta_title: string;
@@ -63,6 +65,19 @@ page: {
     content: string;
     image: string;
   } | undefined;
+      admin: {
+    sub: string;
+      title: string;
+    content: string;
+    image: string;
+    detail: {
+        title: string;
+        phone: string;
+        email: string;
+        linkedin: string;
+        option: string;
+      }[];
+  } | undefined;
 }
 
 async function getSEO(): Promise<ProductResponse> {
@@ -111,8 +126,10 @@ export default async function Home() {
          content={data?.hero.content ||""}
          image={data?.hero.image ||""} />
         <AboutSection about={data?.about}showButton={false} />
-         <ApproachSection work={data?.work} />
+        <ProfileData admin={data?.admin?.detail || []} />
+        <ApproachSection work={data?.work} />
         <VisionSection our={data?.our} />
+        
       </main>
     </div>
   );

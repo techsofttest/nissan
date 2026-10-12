@@ -2,6 +2,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/global/Header";
 import Footer from "@/components/global/Footer";
+import WhatsAppButton from "@/components/global/WhatsAppButton";
 import FloatingContact from "@/components/ui/FloatingContact";
 
 const inter = Inter({
@@ -27,6 +28,7 @@ interface Contact {
   open: string;
   name: string;
   web: string;
+  whatsapp:string;
 }
 
 interface ProductResponse {
@@ -75,6 +77,7 @@ export default async function RootLayout({children,}: Readonly<{children: React.
         {children}
         <Footer contact1={data?.contact1} service={data.service} admin={data.admin} />
         <FloatingContact />
+       <WhatsAppButton whatsappNumber={data?.contact1?.[0]?.whatsapp ?? ""} phoneNumber={data?.contact1?.[0]?.phone ?? ""}/>
       </body>
     </html>
   );

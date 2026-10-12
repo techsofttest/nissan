@@ -41,7 +41,7 @@ export default function HeroSection({hero}:{hero:any}) {
               }
               iconPosition="right"
             >
-              Get a Consultation
+              For Appointments
             </Button>
 
             <Button

@@ -83,7 +83,7 @@ export default function VisionSection({our}:{our:any}) {
           </ScrollReveal>
 
           {/* Mission (Shifted UPWARD like a step) */}
-          <ScrollReveal direction="up" delay={300} className="md:-mt-12 lg:-mt-16 ">
+          <ScrollReveal direction="up" delay={300} >
             <div className="relative space-y-3 bg-[#0F2628]/90 backdrop-blur-sm p-6 md:p-8 rounded-sm h-full overflow-hidden group">
               {/* Animated Wave SVG Background */}
               <div className="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none">
