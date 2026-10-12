@@ -119,7 +119,7 @@ export default function Footer({contact1,service,admin}:FooterProps) {
              {item.name && <p><span className="text-[#5FAAAD]">Contact Person:</span>{item.name}</p>}
            
               {item.phone && <p><span className="text-[#5FAAAD]">Contact No:</span> <a href={`tel:${item.phone}`} className="hover:text-[#5FAAAD] transition-colors text-white font-semibold">{item.phone}</a></p>}
-            {item.web &&   <p className="pt-1"><span className="text-[#5FAAAD]">Web:</span> <a href={item.web} target="_blank" rel="noopener noreferrer" className="hover:text-[#5FAAAD] transition-colors text-white font-medium">{item.web}</a></p>}
+            {item.web &&   <p className="pt-1"><span className="text-[#5FAAAD]">Web:</span> <a href={`https://${item.web}`} target="_blank" rel="noopener noreferrer" className="hover:text-[#5FAAAD] transition-colors text-white font-medium">{item.web}</a></p>}
              {item.email &&  <p><span className="text-[#5FAAAD]">Email:</span> <a href={`mailto:${item.email}`} className="hover:text-[#5FAAAD] transition-colors text-white font-medium">{item.email}</a></p>}
             </div>
           </div>))}
