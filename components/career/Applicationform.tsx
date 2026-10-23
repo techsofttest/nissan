@@ -61,10 +61,10 @@ useEffect(() => {
   );
 
   if (matchedJob) {
-    setSelectedJob(String(matchedJob.id));
+    setSelectedJob(String(matchedJob.title));
   } else if (
     jobParam.trim().toLowerCase() ===
-    "future opportunities / general application".toLowerCase() ||
+    "general".toLowerCase() ||
     jobParam.trim().toLowerCase() === "general"
   ) {
     setSelectedJob("general");

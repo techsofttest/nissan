@@ -108,7 +108,7 @@ export default function CareersPage({ profile, job, career }: Profiledata) {
               {career?.detail[0].description && <div className="text-[15px] leading-relaxed text-[#5A6A72] max-w-md mx-auto mb-6" dangerouslySetInnerHTML={{ __html: career?.detail[0].description ?? "" }} />}
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                <Button href="#apply" variant="primary" size="md" icon={arrow}>
+                <Button href={`?job=${encodeURIComponent(String("general"))}#apply`} variant="primary" size="md" icon={arrow}>
                   Submit Your CV
                 </Button>
                 <a
