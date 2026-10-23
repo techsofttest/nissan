@@ -143,28 +143,78 @@ async function onSubmit(e: FormEvent<HTMLFormElement>) {
     <section id="apply" className="bg-[#0F2628] text-white" aria-labelledby="apply-h">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
-          <div className="space-y-8 lg:col-span-2">
-            <div>
-              <p className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#5FAAAD]">
-                <span className="h-px w-8 bg-[#5FAAAD]" />
-                {apply?.title}
-              </p>
-              <h2 id="apply-h" className="text-2xl font-bold md:text-3xl">
-                {apply?.subtitle}
-              </h2>
-              <div className="mt-4 text-sm leading-relaxed text-white/70" dangerouslySetInnerHTML={{ __html: apply?.content ?? "" }} />
-            </div>
+        
+<div className="space-y-8 lg:col-span-2">
+  {/* Application section heading */}
+  {(apply?.title || apply?.subtitle || apply?.content) && (
+    <div>
+      {apply?.title && (
+        <p className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#5FAAAD]">
+          <span className="h-px w-8 bg-[#5FAAAD]" />
+          {apply.title}
+        </p>
+      )}
 
-            <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6">
-              <h3 className="text-lg font-bold">{apply?.detail?.[0]?.title}</h3>
-              <div className="text-sm leading-relaxed text-white/70 [&_i]:text-xs [&_i]:text-white/50" dangerouslySetInnerHTML={{ __html: apply?.detail?.[0]?.description ?? "" }} />
-            </div>
+      {apply?.subtitle && (
+        <h2 id="apply-h" className="text-2xl font-bold md:text-3xl">
+          {apply.subtitle}
+        </h2>
+      )}
 
-            <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-6">
-              <h4 className="text-sm font-bold">{apply?.detail?.[1]?.title}</h4>
-              <div className="text-xs leading-relaxed text-white/60" dangerouslySetInnerHTML={{ __html: apply?.detail?.[1]?.description ?? "" }} />
-            </div>
-          </div>
+      {apply?.content?.trim() && (
+        <div
+          className="mt-4 text-sm leading-relaxed text-white/70"
+          dangerouslySetInnerHTML={{ __html: apply.content }}
+        />
+      )}
+    </div>
+  )}
+
+  {/* First information box */}
+  {apply?.detail?.[0] &&
+    (apply.detail[0].title?.trim() ||
+      apply.detail[0].description?.trim()) && (
+      <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-6">
+        {apply.detail[0].title?.trim() && (
+          <h3 className="text-lg font-bold">
+            {apply.detail[0].title}
+          </h3>
+        )}
+
+        {apply.detail[0].description?.trim() && (
+          <div
+            className="text-sm leading-relaxed text-white/70 [&_i]:text-xs [&_i]:text-white/50"
+            dangerouslySetInnerHTML={{
+              __html: apply.detail[0].description,
+            }}
+          />
+        )}
+      </div>
+    )}
+
+  {/* Second information box */}
+  {apply?.detail?.[1] &&
+    (apply.detail[1].title?.trim() ||
+      apply.detail[1].description?.trim()) && (
+      <div className="space-y-3 rounded-2xl border border-white/10 bg-white/5 p-6">
+        {apply.detail[1].title?.trim() && (
+          <h4 className="text-sm font-bold">
+            {apply.detail[1].title}
+          </h4>
+        )}
+
+        {apply.detail[1].description?.trim() && (
+          <div
+            className="text-xs leading-relaxed text-white/60"
+            dangerouslySetInnerHTML={{
+              __html: apply.detail[1].description,
+            }}
+          />
+        )}
+      </div>
+    )}
+</div>
+
 
           <div className="lg:col-span-3">
             <div className="rounded-2xl bg-white p-6 text-[#101820] shadow-xl md:p-8">
