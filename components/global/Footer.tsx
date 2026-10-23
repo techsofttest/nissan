@@ -74,6 +74,7 @@ export default function Footer({contact1,service,admin}:FooterProps) {
               <li><a href="/about" className="hover:text-[#5FAAAD] transition-colors">About Us</a></li>
               <li><a href="/service" className="hover:text-[#5FAAAD] transition-colors">Services</a></li>
               <li><a href="/why-us" className="hover:text-[#5FAAAD] transition-colors">Why Choose Us</a></li>
+              <li><a href="/career" className="hover:text-[#5FAAAD] transition-colors">Career</a></li>
               <li><a href="/ecosystem" className="hover:text-[#5FAAAD] transition-colors">Resources</a></li>
               <li><a href="/contact" className="hover:text-[#5FAAAD] transition-colors">Contact Us</a></li>
             </ul>
