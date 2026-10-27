@@ -1,12 +1,15 @@
+
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronDown } from "lucide-react";
+
 import Button from "@/components/ui/Button";
 import ServicesMegaMenu from "@/components/global/ServicesMegaMenu";
-import { ChevronDown } from "lucide-react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+
 export interface ServiceItem {
   title: string;
   slug: string;
@@ -18,36 +21,57 @@ export interface ServiceCategory {
   services: ServiceItem[];
 }
 
-interface ServicesMegaMenuProps {
+interface HeaderProps {
   service: ServiceCategory[];
 }
 
-export default function Header({ service }: ServicesMegaMenuProps) {
+export default function Header({ service = [] }: HeaderProps) {
+  const pathname = usePathname();
 
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [activeMobileCategory, setActiveMobileCategory] = useState<number | null>(null);
-  const [divisionOpen, setDivisionOpen] = useState(false);
+  const [activeMobileCategory, setActiveMobileCategory] =
+    useState<number | null>(null);
 
-const pathname = usePathname();
-const isServicePage = /^\/service\/[^/]+\/?$/.test(pathname ?? "");
-const isSolidHeader = isServicePage || scrolled;
+  // Use a solid header on service routes, even before scrolling.
+  const isServicePage = /^\/service(?:\/|$)/.test(pathname ?? "");
+  const isSolidHeader = isServicePage || scrolled;
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 40) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 40);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
+  // Close the mobile drawer when navigating to another page.
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setMobileServicesOpen(false);
+    setActiveMobileCategory(null);
+  }, [pathname]);
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    setMobileServicesOpen(false);
+    setActiveMobileCategory(null);
+  };
+
+  const navLinkClass =
+    "whitespace-nowrap py-2 transition-colors duration-200 hover:text-[#5FAAAD]";
+
+  const mobileLinkClass =
+    "block w-full py-2.5 text-[15px] font-medium transition-colors hover:text-[#5FAAAD]";
+
   return (
- <header
+   <header
   className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
     isSolidHeader
       ? "bg-white backdrop-blur-md py-4 text-[#101820] border-b border-[#D9E0E3] shadow-md"
@@ -69,255 +93,323 @@ const isSolidHeader = isServicePage || scrolled;
             priority
           />
         </a>
-
-        {/* Desktop Nav */}
+        {/* Desktop navigation */}
         <nav
-          className={`hidden min-[1200px]:flex items-center space-x-8 text-[15px] font-medium transition-colors ${isSolidHeader ? "text-[#101820]" : "text-white"
-            }`}
+          aria-label="Main navigation"
+          className={`hidden min-[1200px]:flex min-[1200px]:items-center min-[1200px]:gap-4 min-[1280px]:gap-6 min-[1360px]:gap-7 text-[13px] min-[1360px]:text-sm font-medium ${
+            isSolidHeader ? "text-[#101820]" : "text-white"
+          }`}
         >
-          <a
-            href="/about"
-            className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
-              }`}
-          >
+          <Link href="/about" className={navLinkClass}>
             About Us
-          </a>
+          </Link>
 
-          {/* Full Width Services Mega Menu */}
-          <div className="group static py-1">
-            <a
+          {/* Services mega menu */}
+          <div className="group/services relative py-2">
+            <Link
               href="/service"
-              className={`flex items-center gap-1.5 transition-colors font-semibold ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
-                }`}
+              className={`${navLinkClass} flex items-center gap-1.5 font-semibold`}
             >
-              <span>Services</span>
+              Services
+              <ChevronDown
+                size={15}
+                className="transition-transform duration-200 group-hover/services:rotate-180"
+              />
+            </Link>
+
+            {service.length > 0 && (
+              <ServicesMegaMenu services={service} />
+            )}
+          </div>
+
+          <Link href="/why-us" className={navLinkClass}>
+            Why Choose Us
+          </Link>
+
+          <Link href="/division" className={navLinkClass}>
+            Division
+          </Link>
+
+          <Link href="/resourse" className={navLinkClass}>
+            Resources
+          </Link>
+
+          <Link href="/career" className={navLinkClass}>
+            Career
+          </Link>
+
+          <Link href="/contact" className={navLinkClass}>
+            Contact Us
+          </Link>
+        </nav>
+
+        {/* Desktop appointment button */}
+        <div className="hidden shrink-0 min-[1200px]:block">
+          <Button
+            href="/contact#contact-form"
+            variant={isSolidHeader ? "primary" : "primary-dark"}
+            size="sm"
+            icon={
               <svg
-                className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180 opacity-90 group-hover:opacity-100"
+                className="h-4 w-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-
-            {/* Full-Width Mega Banner Component */}
-            {service && <ServicesMegaMenu services={service} />}
-          </div>
-
-          <a
-            href="/why-us"
-            className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
-              }`}
-          >
-            Why Choose Us
-          </a>
-          <a
-            href="/division"
-            className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
-              }`}
-          >
-            Division
-          </a>
-
-          <a
-            href="/resourse"
-            className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
-              }`}
-          >
-            Resources
-          </a>
-          <a
-            href="/career"
-            className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
-              }`}
-          >
-            Career
-          </a>
-          <a
-            href="/contact"
-            className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
-              }`}
-          >
-            Contact Us
-          </a>
-        </nav>
-
-        {/* Desktop CTA */}
-        <div className="hidden min-[1200px]:flex items-center gap-4">
-          <Button
-            href="/contact#contact-form"
-            variant={scrolled ? "primary" : "primary-dark"}
-            size="sm"
-            icon={
-              <svg className=" w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
               </svg>
             }
           >
-           For Appointments
+            For Appointments
           </Button>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile / tablet menu toggle */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`flex min-[1200px]:hidden  p-2 focus:outline-none transition-colors ${isSolidHeader ? "text-[#101820]" : "text-white"
-            }`}
-          aria-label="Toggle navigation menu"
+          type="button"
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-navigation"
+          className={`flex shrink-0 items-center justify-center rounded-lg p-2.5 transition-colors hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5FAAAD] min-[1200px]:hidden ${
+            isSolidHeader ? "text-[#101820]" : "text-white"
+          }`}
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          {mobileMenuOpen ? (
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          )}
         </button>
       </div>
 
-      {/* Mobile Navigation Drawer */}
+      {/* Mobile / tablet navigation drawer */}
       {mobileMenuOpen && (
         <div
-          className={`flex min-[1200px]:hidden border-b px-6 py-6 flex flex-col space-y-4 animate-in slide-in-from-top duration-200 max-h-[85vh] overflow-y-auto custom-scrollbar ${scrolled
-            ? "bg-white text-[#101820] border-[#D9E0E3]"
-            : "bg-[#0F2628] text-white border-[#18393D]"
-            }`}
+          id="mobile-navigation"
+          className={`absolute inset-x-0 top-full max-h-[calc(100dvh-65px)] overflow-y-auto overscroll-contain border-t px-5 pb-6 pt-4 shadow-xl sm:px-8 sm:pb-8 min-[1200px]:hidden ${
+            isSolidHeader
+              ? "border-[#D9E0E3] bg-white text-[#101820]"
+              : "border-[#18393D] bg-[#0F2628] text-white"
+          }`}
         >
-          <a
-            href="/"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
+          <nav
+            aria-label="Mobile navigation"
+            className="mx-auto flex w-full max-w-2xl flex-col divide-y divide-current/10"
           >
-            Home
-          </a>
-          <a
-            href="/about"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
-          >
-            About Us
-          </a>
+            <Link
+              href="/"
+              onClick={closeMobileMenu}
+              className={mobileLinkClass}
+            >
+              Home
+            </Link>
 
-          {/* Mobile Services Accordion */}
-          <div className="border-y border-[#18393D]/40 py-2 my-1">
-            <div className="flex items-center justify-between py-1">
-              <a
-                href="/service"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-[16px] font-bold hover:text-[#5FAAAD]"
-              >
-                Services
-              </a>
-              <button
-                onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                className="p-1 focus:outline-none text-[#5FAAAD]"
-                aria-label="Toggle services list"
-              >
+            <Link
+              href="/about"
+              onClick={closeMobileMenu}
+              className={mobileLinkClass}
+            >
+              About Us
+            </Link>
+
+            {/* Services accordion */}
+            <div className="py-2">
+              <div className="flex items-center justify-between gap-3">
+                <Link
+                  href="/service"
+                  onClick={closeMobileMenu}
+                  className="py-2.5 text-[15px] font-semibold transition-colors hover:text-[#5FAAAD]"
+                >
+                  Services
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => setMobileServicesOpen((open) => !open)}
+                  aria-label="Toggle services list"
+                  aria-expanded={mobileServicesOpen}
+                  className="rounded-md p-2 text-[#5FAAAD] hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5FAAAD]"
+                >
+                  <ChevronDown
+                    size={20}
+                    className={`transition-transform duration-200 ${
+                      mobileServicesOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+              </div>
+
+              {mobileServicesOpen && (
+                <div className="space-y-1 pb-2 pl-3">
+                  {service.map((category, index) => (
+                    <div
+                      key={category.slug}
+                      className="border-l-2 border-[#5FAAAD]/60 pl-3"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <Link
+                          href={`/service/${category.slug}`}
+                          onClick={closeMobileMenu}
+                          className="min-w-0 flex-1 py-2 text-sm font-semibold text-[#5FAAAD] hover:underline"
+                        >
+                          {category.title}
+                        </Link>
+
+                        {category.services?.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setActiveMobileCategory((active) =>
+                                active === index ? null : index
+                              )
+                            }
+                            aria-label={`Toggle ${category.title} services`}
+                            aria-expanded={activeMobileCategory === index}
+                            className="rounded-md p-2 hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5FAAAD]"
+                          >
+                            <ChevronDown
+                              size={17}
+                              className={`transition-transform duration-200 ${
+                                activeMobileCategory === index
+                                  ? "rotate-180"
+                                  : ""
+                              }`}
+                            />
+                          </button>
+                        )}
+                      </div>
+
+                      {activeMobileCategory === index &&
+                        category.services?.length > 0 && (
+                          <div className="space-y-1 pb-2 pl-2">
+                            {category.services.map((item) => (
+                              <Link
+                                key={item.slug}
+                                href={`/service/${category.slug}/${item.slug}`}
+                                onClick={closeMobileMenu}
+                                className="flex items-start gap-2 py-2 text-[13px] leading-5 opacity-80 transition-colors hover:text-[#5FAAAD] hover:opacity-100"
+                              >
+                                <span
+                                  aria-hidden="true"
+                                  className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#5FAAAD]"
+                                />
+                                <span>{item.title}</span>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
+                    </div>
+                  ))}
+
+                  {service.length === 0 && (
+                    <p className="py-2 text-sm opacity-70">
+                      No services available.
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/why-us"
+              onClick={closeMobileMenu}
+              className={mobileLinkClass}
+            >
+              Why Choose Us
+            </Link>
+
+            <Link
+              href="/division"
+              onClick={closeMobileMenu}
+              className={mobileLinkClass}
+            >
+              Division
+            </Link>
+
+            <Link
+              href="/resourse"
+              onClick={closeMobileMenu}
+              className={mobileLinkClass}
+            >
+              Resources / Blog
+            </Link>
+
+            <Link
+              href="/career"
+              onClick={closeMobileMenu}
+              className={mobileLinkClass}
+            >
+              Career
+            </Link>
+
+            <Link
+              href="/contact"
+              onClick={closeMobileMenu}
+              className={mobileLinkClass}
+            >
+              Contact Us
+            </Link>
+          </nav>
+
+          {/* Mobile appointment CTA */}
+          <div className="mx-auto mt-5 w-full max-w-2xl">
+            <Button
+              href="/contact#contact-form"
+              variant="primary"
+              size="md"
+              className="w-full justify-center"
+              onClick={closeMobileMenu}
+              icon={
                 <svg
-                  className={`w-5 h-5 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
+                  className="h-4 w-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-            </div>
-
-            {mobileServicesOpen && (
-              <div className="pt-2 space-y-4">
-                {service.map((service, index) => (
-                  <div key={index} className="pl-2 border-l-2 border-[#5FAAAD]">
-                    <Link href={`/service/${service.slug}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                      // onClick={() =>
-                      //   setActiveMobileCategory(activeMobileCategory === index ? null : index)
-                      // }
-                      className="w-full text-left font-semibold text-[13.5px] text-[#5FAAAD] flex items-center justify-between py-1"
-                    >
-                      <span>{service.title}</span>
-                      {/* <span className="text-xs">{activeMobileCategory === index ? "−" : "+"}</span> */}
-                    </Link>
-
-                    {activeMobileCategory === index && service.services && (
-
-                      <div className="pl-2 pt-2 space-y-2">
-                        {service.services.map((item, i) => (
-                          <a
-                            key={i}
-                            href={`/service/${service.slug}/${item.slug}`}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-start gap-2 text-[12.5px] text-white/90 hover:text-[#5FAAAD] py-1"
-                          >
-                            <svg
-                              className="w-3.5 h-3.5 text-[#5FAAAD] shrink-0 mt-0.5"
-                              viewBox="0 0 16 16"
-                              fill="none"
-                              stroke="currentColor"
-                            >
-                              <path
-                                d="M4 3v7h8"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-
-                            <span>{item.title}</span>
-                          </a>
-                        ))}
-                      </div>
-
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <a
-            href="/why-us"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
-          >
-            Why Choose Us
-          </a>
-          <a
-            href="/division"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
-          >
-            Division
-          </a>
-          <a
-            href="/resourse"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
-          >
-            Resources / Blog
-          </a>
-          <a
-            href="/contact"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-[16px] font-medium py-1 hover:text-[#5FAAAD]"
-          >
-            Contact Us
-          </a>
-          <div className="pt-2">
-            <Button
-              href="/contact"
-              variant="primary"
-              size="md"
-              className="w-full"
-              onClick={() => setMobileMenuOpen(false)}
-              icon={
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
                 </svg>
               }
             >
-             For Appointments
+              For Appointments
             </Button>
           </div>
         </div>
