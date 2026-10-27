@@ -76,13 +76,6 @@ const isSolidHeader = isServicePage || scrolled;
             }`}
         >
           <a
-            href="/"
-            className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
-              }`}
-          >
-            Home
-          </a>
-          <a
             href="/about"
             className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
               }`}
@@ -133,6 +126,13 @@ const isSolidHeader = isServicePage || scrolled;
               }`}
           >
             Resources
+          </a>
+          <a
+            href="/career"
+            className={`transition-colors py-1 ${scrolled ? "hover:text-[#5FAAAD]" : "hover:text-[#5FAAAD]"
+              }`}
+          >
+            Career
           </a>
           <a
             href="/contact"
