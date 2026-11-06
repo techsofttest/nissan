@@ -73,7 +73,7 @@ export default async function RootLayout({children,}: Readonly<{children: React.
   return (
     <html lang="en"  className={`${inter.variable} ${plusJakarta.variable} h-full antialiased scroll-smooth`}>
       <body className="min-h-full flex flex-col font-sans bg-[#F3FBFB] text-[#101820] selection:bg-[#5FAAAD] selection:text-white">
-        <Header service={data.service}/>
+        <Header service={data?.service ?? []}/>
         {children}
         <Footer contact1={data?.contact1} service={data.service} admin={data.admin} />
         <FloatingContact />

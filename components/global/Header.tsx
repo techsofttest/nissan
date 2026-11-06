@@ -20,7 +20,7 @@ interface HeaderProps {
   service: ServiceCategory[];
 }
 
-export default function Header({ service = [] }: HeaderProps) {
+export default function Header({ service }: HeaderProps) {
   const pathname = usePathname();
 
   const [scrolled, setScrolled] = useState(false);
