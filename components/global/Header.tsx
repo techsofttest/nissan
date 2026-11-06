@@ -115,7 +115,6 @@ export default function Header({ service = [] }: HeaderProps) {
 
               <ServicesMegaMenu services={service} />
           </div>
-
           <Link href="/why-us" className={navLinkClass}>
             Why Choose Us
           </Link>
