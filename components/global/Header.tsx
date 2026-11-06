@@ -117,9 +117,7 @@ export default function Header({ service = [] }: HeaderProps) {
               />
             </Link>
 
-            {service.length > 0 && (
               <ServicesMegaMenu services={service} />
-            )}
           </div>
 
           <Link href="/why-us" className={navLinkClass}>

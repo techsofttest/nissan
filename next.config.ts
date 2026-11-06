@@ -15,6 +15,16 @@ const nextConfig: NextConfig = {
         hostname: "demo.janamithrasociety.com",
         pathname: "/nissan/public/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "nissanbizsolutions.com",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.nissanbizsolutions.com",
+        pathname: "/uploads/**",
+      },
     ],
   },
 };
