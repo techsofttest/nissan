@@ -10,15 +10,10 @@ import { ChevronDown } from "lucide-react";
 import Button from "@/components/ui/Button";
 import ServicesMegaMenu from "@/components/global/ServicesMegaMenu";
 
-export interface ServiceItem {
-  title: string;
-  slug: string;
-}
 
 export interface ServiceCategory {
   title: string;
   slug: string;
-  services: ServiceItem[];
 }
 
 interface HeaderProps {
@@ -272,19 +267,25 @@ export default function Header({ service = [] }: HeaderProps) {
                 </button>
               </div>
 
-              {/* Mobile Services list */}
               {mobileServicesOpen && (
                 <div className="space-y-1 pb-2 pl-3">
-                  {service.map((category) => (
-                    <Link
+                  {service.map((category, index) => (
+                    <div
                       key={category.slug}
-                      href={`/service/${category.slug}`}
-                      onClick={closeMobileMenu}
-                      className="block w-full border-l-2 border-[#5FAAAD]/60 py-2 pl-3 text-sm font-semibold text-[#5FAAAD] transition-colors hover:underline"
+                      className="border-l-2 border-[#5FAAAD]/60 pl-3"
                     >
-                      {category.title}
-                    </Link>
+                      <div className="flex items-center justify-between gap-2">
+                        <Link
+                          href={`/service/${category.slug}`}
+                          onClick={closeMobileMenu}
+                          className="min-w-0 flex-1 py-2 text-sm font-semibold text-[#5FAAAD] hover:underline"
+                        >
+                          {category.title}
+                        </Link>
+                      </div>
+                    </div>
                   ))}
+
                   {service.length === 0 && (
                     <p className="py-2 text-sm opacity-70">
                       No services available.
