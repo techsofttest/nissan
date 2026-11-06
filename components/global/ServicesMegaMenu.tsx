@@ -1,14 +1,9 @@
 import React from "react";
 
-export interface ServiceItem {
-  title: string;
-  slug: string;
-}
 
 export interface ServiceCategory {
   title: string;
   slug: string;
-  services: ServiceItem[];
 }
 
 interface ServicesMegaMenuProps {
@@ -34,7 +29,8 @@ export default function ServicesMegaMenu({
                   </h4>
                 </div>
 
-                {/* Sub-services */}{service.services && (
+                {/* Sub-services */}
+                {/* {service.services && (
                   <ul className="space-y-2.5">
                     {service.services.map((item, i) => (
                       <li
@@ -62,7 +58,7 @@ export default function ServicesMegaMenu({
                         </div>
                       </li>
                     ))}
-                  </ul>)}
+                  </ul>)} */}
 
               </a>
             ))}

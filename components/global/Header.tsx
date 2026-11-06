@@ -10,15 +10,11 @@ import { ChevronDown } from "lucide-react";
 import Button from "@/components/ui/Button";
 import ServicesMegaMenu from "@/components/global/ServicesMegaMenu";
 
-export interface ServiceItem {
-  title: string;
-  slug: string;
-}
+
 
 export interface ServiceCategory {
   title: string;
   slug: string;
-  services: ServiceItem[];
 }
 
 interface HeaderProps {
@@ -286,49 +282,10 @@ export default function Header({ service = [] }: HeaderProps) {
                           {category.title}
                         </Link>
 
-                        {category.services?.length > 0 && (
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setActiveMobileCategory((active) =>
-                                active === index ? null : index
-                              )
-                            }
-                            aria-label={`Toggle ${category.title} services`}
-                            aria-expanded={activeMobileCategory === index}
-                            className="rounded-md p-2 hover:bg-black/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#5FAAAD]"
-                          >
-                            <ChevronDown
-                              size={17}
-                              className={`transition-transform duration-200 ${
-                                activeMobileCategory === index
-                                  ? "rotate-180"
-                                  : ""
-                              }`}
-                            />
-                          </button>
-                        )}
+                        
                       </div>
 
-                      {activeMobileCategory === index &&
-                        category.services?.length > 0 && (
-                          <div className="space-y-1 pb-2 pl-2">
-                            {category.services.map((item) => (
-                              <Link
-                                key={item.slug}
-                                href={`/service/${category.slug}/${item.slug}`}
-                                onClick={closeMobileMenu}
-                                className="flex items-start gap-2 py-2 text-[13px] leading-5 opacity-80 transition-colors hover:text-[#5FAAAD] hover:opacity-100"
-                              >
-                                <span
-                                  aria-hidden="true"
-                                  className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#5FAAAD]"
-                                />
-                                <span>{item.title}</span>
-                              </Link>
-                            ))}
-                          </div>
-                        )}
+                      
                     </div>
                   ))}
 
